@@ -14,6 +14,7 @@ Or, one can import this into python and decay the particles interactively:
 
 import math
 import sys
+import argparse
 
 # ------------------------------------------------------------------------------
 def getBeta(m, p):
@@ -64,7 +65,7 @@ def restFrameMomenta(m0, m1, m2):
     0 --> 1 2
     """
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    p1 = math.sqrt( 1/2. * (m0**2 - m1**2 - m2**2))
+    p1 = 1/2. * math.sqrt( (m0**2 - (m1 + m2)**2))
     p2 = -p1
 
     return {'p1':p1, 'p2':p2}
@@ -151,9 +152,17 @@ def decayParticle(m0, p0, m1, m2):
 
 # ==============================================================================
 if __name__ == '__main__':
-    m0 = float(sys.argv[1])
-    p0 = float(sys.argv[2])
-    m1 = float(sys.argv[3])
-    m2 = float(sys.argv[4])
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--m0', type=float, default=91)
+    parser.add_argument('--p0', type=float, default=0)
+    parser.add_argument('--m1', type=float, default=0.1)
+    parser.add_argument('--m2', type=float, default=0.1)
+
+    args = parser.parse_args()
+    print args
+    m0 = float(args.m0)
+    p0 = float(args.p0)
+    m1 = float(args.m1)
+    m2 = float(args.m2)
 
     decayParticle( m0, p0, m1, m2 )
